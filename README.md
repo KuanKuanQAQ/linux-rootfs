@@ -1,3 +1,3 @@
-# linux-rootfs
+# linux-rootfs-arm64
 
-A simple root file system built by busybox for linux.
+This branch is A simple root file system built by busybox for linux-arm64.
