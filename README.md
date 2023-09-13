@@ -9,3 +9,5 @@ There is a `MAKEDEV` file in `initramfs/dev/`, you need to go into this director
 cd initramfs/dev/
 sh MAKEDEV
 ```
+## shared file
+https://github.com/dk-penguins/docs/blob/main/环境配置方案/QEMU共享目录.md
