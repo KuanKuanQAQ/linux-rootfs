@@ -11,10 +11,11 @@ There is a `MAKEDEV` file in `initramfs/dev/`, you need to go into this director
 ➜  dev sh MAKEDEV
 ```
 
-Then please ensure that the execute permission for the file `initramfs/init` has been enabled:
+Then please ensure that the execute permission for the files has been enabled:
 
 ```shell
 ➜  linux-rootfs sudo chmod a+x initramfs/init
+➜  linux-rootfs sudo chmod a+x initramfs/etc/init.d/rcS
 ```
 
 This root file system includes a mount directory `mnt/`. This directory is mounted to the `/root/mnt_path/` directory on the physical machine. Files between them will be synchronized.
