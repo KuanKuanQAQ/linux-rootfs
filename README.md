@@ -43,7 +43,7 @@ Turn on the `setting -> [*] Build static binary (no shared libs)`.
 
 ```shell
 ➜  ~ cd busybox-1.36.0/_install
-➜  _install mkdir etc dev lib proc sys
+➜  _install mkdir etc dev lib proc sys tmp mnt
 ➜  _install touch init
 ➜  _install chmod a+x init
 ➜  _install rm linuxrc
@@ -54,10 +54,8 @@ Write the following in the `init` file:
 ```shell
 ➜  _install cat init
 #!/bin/busybox sh
-mount -t proc none /proc
-mount -t sysfs none /sys
-
 exec /sbin/init
+
 ```
 
 Create the following files in the `etc/` directory:
@@ -97,7 +95,6 @@ echo root:x:0: > /etc/group
 chmod 4755 /bin/busybox
 
 /bin/mount -a
-mount -t devpts devpts /dev/pts
 mdev -s
 
 ```
@@ -107,7 +104,6 @@ Create device files in the `dev/` directory:
 ```shell
 ➜  _install cd dev/
 ➜  dev mknod console c 5 1
-➜  dev mkdir pts
 ```
 
 Then, create the `initramfs`:
