@@ -1,5 +1,5 @@
 # sh mkrootfs.sh
-qemu-system-aarch64 -s\
+qemu-system-aarch64 -s \
     -machine virt -cpu cortex-a57 \
     -m 8192 \
     -kernel ~/openEuler-kernel/build/arch/arm64/boot/Image \

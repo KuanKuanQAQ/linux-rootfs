@@ -7,13 +7,14 @@ You may see some folders with only `.gitkeep` files, this is to prevent git from
 There is a `MAKEDEV` file in `initramfs/dev/`, you need to go into this directory and run MAKEDEV before all:
 
 ```shell
-sh initramfs/dev/MAKEDEV
+➜  linux-rootfs cd initramfs/dev 
+➜  dev sh MAKEDEV
 ```
 
 Then please ensure that the execute permission for the file `initramfs/init` has been enabled:
 
 ```shell
-sudo chmod a+x initramfs/init
+➜  linux-rootfs sudo chmod a+x initramfs/init
 ```
 
 This root file system includes a mount directory `mnt/`. This directory is mounted to the `/root/mnt_path/` directory on the physical machine. Files between them will be synchronized.
@@ -112,14 +113,14 @@ Create device files in the `dev/` directory:
 Then, create the `initramfs`:
 
 ```shell
-➜  rootfs mkdir initramfs
-➜  rootfs cd initramfs
+➜  linux-rootfs mkdir initramfs
+➜  linux-rootfs cd initramfs
 ➜  initramfs cp ~/busybox-1.36.0/_install/* -rf ./
 ```
 
 Finally, package the `initramfs`:
 
 ```bash
-➜  rootfs cd initramfs
+➜  linux-rootfs cd initramfs
 ➜  initramfs find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs.cpio.gz
 ```
