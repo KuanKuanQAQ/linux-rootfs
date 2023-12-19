@@ -1,5 +1,15 @@
 # linux-rootfs-arm64
 
+In order to enable qemu's net service, you need to create follow files:
+
+```shell
+➜  ~ mkdir /etc/qemu
+➜  ~ echo 'allow all' > /etc/qemu/bridge.conf
+➜  ~ mkdir -p /dev/net
+➜  ~ mknod /dev/net/tun c 10 200
+➜  ~ chmod 600 /dev/net/tun
+```
+
 This branch is A simple root file system built by busybox for linux-arm64.
 
 You may see some folders with only `.gitkeep` files, this is to prevent git from ignoring these empty directories. These empty directories are all necessary in the root filesystem.
