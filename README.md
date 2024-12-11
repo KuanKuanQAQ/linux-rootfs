@@ -131,3 +131,33 @@ Finally, package the `initramfs`:
 ➜  linux-rootfs cd initramfs
 ➜  initramfs find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs.cpio.gz
 ```
+
+
+# bullsyes根文件系统
+
+我不装了，我就写中文。
+
+create-image.sh来源：https://github.com/google/syzkaller/blob/master/tools/create-image.sh
+
+这是一个用于创建最小化Debian Linux镜像的脚本，主要用于syzkaller（一个内核模糊测试工具）项目。我没去掉里面syzkaller相关的部分。
+
+但是做了如下小修改：
+
+```
+# 可能会需要某种修改！把enp0s1改成ip link show查询出的设备名
+printf '\nauto enp0s1\niface enp0s1 inet dhcp\n' | sudo tee -a $DIR/etc/network/interfaces
+```
+
+如果你搜索启动日志，会看到这样一条：`virtio_net virtio1 enp0s1: renamed from eth0`。这是因为使用systemd的发行版Linux采用了"可预测网络接口命名"机制。它不再使用传统的 eth0、eth1 这样的名称，而是根据设备的物理/虚拟特性来命名。因此/etc/network/interfaces中的eth0要改成enp0s1。（大概率是因为这个）
+
+```
+# 把qemu虚拟机中的/mnt挂在到物理机上
+mount-1 /mnt 9p trans=virtio,version=9p2000.L,posixacl,msize=512000 0 0
+```
+
+然后把qemu启动命令加上：
+
+```
+    -fsdev local,path=/root/mnt_path/,security_model=mapped,id=dev-1 \
+    -device virtio-9p-device,fsdev=dev-1,mount_tag=mount-1 \
+```
