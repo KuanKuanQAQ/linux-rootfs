@@ -135,8 +135,6 @@ Finally, package the `initramfs`:
 
 # bullsyes根文件系统
 
-我不装了，我就写中文。
-
 create-image.sh来源：https://github.com/google/syzkaller/blob/master/tools/create-image.sh
 
 这是一个用于创建最小化Debian Linux镜像的脚本，主要用于syzkaller（一个内核模糊测试工具）项目。我没去掉里面syzkaller相关的部分。
@@ -148,7 +146,12 @@ create-image.sh来源：https://github.com/google/syzkaller/blob/master/tools/cr
 printf '\nauto enp0s1\niface enp0s1 inet dhcp\n' | sudo tee -a $DIR/etc/network/interfaces
 ```
 
-如果你搜索启动日志，会看到这样一条：`virtio_net virtio1 enp0s1: renamed from eth0`。这是因为使用systemd的发行版Linux采用了"可预测网络接口命名"机制。它不再使用传统的 eth0、eth1 这样的名称，而是根据设备的物理/虚拟特性来命名。因此/etc/network/interfaces中的eth0要改成enp0s1。（大概率是因为这个）
+如果你搜索启动日志，会看到这样一条：`virtio_net virtio1 enp0s1: renamed from eth0`。这是因为使用systemd的发行版Linux采用了"可预测网络接口命名"机制。它不再使用传统的 eth0、eth1 这样的名称，而是根据设备的物理/虚拟特性来命名。因此/etc/network/interfaces中的eth0要改成enp0s1。
+
+但是我最近遇到了`ip link show`什么也查不出来的情况，可能是内核配置没有开相应的选项。那么如果启动不了就不是这里的问题了。
+
+
+`/etc/fstab`修改：
 
 ```
 # 把qemu虚拟机中的/mnt挂在到物理机上
