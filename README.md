@@ -137,7 +137,6 @@ Finally, package the `initramfs`:
 如果并不是以root身份构造busybox，则有可能会出现：mount: you must be root 报错。因此需要将 bin 目录下所有文件修改拥有者为root：
 
 ```bash
-
 ➜  bin sudo chown root * -R
 ```
 
