@@ -132,6 +132,14 @@ Finally, package the `initramfs`:
 ➜  initramfs find . -print0 | cpio --null -ov --format=newc | gzip -9 > ../initramfs.cpio.gz
 ```
 
+**权限问题**
+
+如果并不是以root身份构造busybox，则有可能会出现：mount: you must be root 报错。因此需要将 bin 目录下所有文件修改拥有者为root：
+
+```bash
+
+➜  bin sudo chown root * -R
+```
 
 # bullsyes根文件系统
 
